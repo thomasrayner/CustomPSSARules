@@ -11,8 +11,7 @@ function Test-VariableCasing {
 		try {
             $variables = $ScriptBlockAst.FindAll( { $args[0] -is [System.Management.Automation.Language.VariableExpressionAst] -and  
                 $args[0].VariablePath.UserPath -cmatch '[A-Z]{3,}' }, $true )
-            foreach ( $variable in $variables )
-            {
+            foreach ( $variable in $variables ) {
                 [PSCustomObject]@{
 					Message  = 'Avoid variables with more than 3 capital letters in a row in their name'
 					Extent   = $variable.Extent
@@ -41,8 +40,7 @@ function Test-VariableCasing {
         try {
 			$variables = $ScriptBlockAst.FindAll( { $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] -and  
                 $args[0].Name -cmatch '[A-Z]{3,}' }, $true )
-            foreach ( $variable in $variables )
-            {
+            foreach ( $variable in $variables ) {
                 [PSCustomObject]@{
 					Message  = 'Avoid function names with more than 3 capital letters in a row in their name'
 					Extent   = $variable.Extent
