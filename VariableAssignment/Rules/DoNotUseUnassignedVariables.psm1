@@ -51,7 +51,6 @@ function Test-VariableAssignment {
                     $line = [int]$exp.Line.ToString()
                     $assignsAfter = @($assigned | Where-Object { ( $_.Name -eq $exp.Name.ToString() ) -and ( $_.Line -gt $line ) })
                     $assignsBefore = @($assigned | Where-Object { ( $_.Name -eq $exp.Name.ToString() ) -and ( $_.Line -le $line ) })
-                    $violation = $false
 
                     if ( ( -not $assignsBefore ) -and ( $assignsAfter ) ) {
                         [PSCustomObject]@{
