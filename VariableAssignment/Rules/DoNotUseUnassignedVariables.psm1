@@ -8,6 +8,7 @@ function Test-VariableAssignment {
     )
 
     process {
+        $automaticVariables = @('$','?','^','_','ARGS','CONSOLEFILENAME','ERROR','EVENT','EVENTARGS','EVENTSUBSCRIBER','EXECUTIONCONTEXT','FALSE','FOREACH','HOME','HOST','INPUT','LASTEXITCODE','MATCHES','MYINVOCATION','NESTEDPROMPTLEVEL','NULL','OFS','PID','PROFILE','PSBOUNDPARAMETERS','PSCMDLET','PSCOMMANDPATH','PSCULTURE','PSDEBUGCONTEXT','PSHOME','PSITEM','PSSCRIPTROOT','PSSENDERINFO','PSUICULTURE','PSVERSIONTABLE','PWD','REPORTERRORSHOWEXCEPTIONCLASS','REPORTERRORSHOWINNEREXCEPTION','REPORTERRORSHOWSOURCE','REPORTERRORSHOWSTACKTRACE','SENDER','SHELLID','STACKTRACE','THIS','TRUE')
         try {
 			$parametersAst = $ScriptBlockAst.FindAll( { $args[0] -is [System.Management.Automation.Language.ParamBlockAst] }, $true )
             $variablesAst = $ScriptBlockAst.FindAll( { $args[0] -is [System.Management.Automation.Language.AssignmentStatementAst] }, $true )
@@ -39,7 +40,7 @@ function Test-VariableAssignment {
 
 
             foreach ( $exp in $expressions ) {
-                if ( $exp.Name.ToString() -notin $assigned.Name ) {
+                if ( $exp.Name.ToString() -notin ($assigned.Name + $automaticVariables)) {
                     [PSCustomObject]@{
 					    Message  = "$($exp.Name) is used but never assigned"
 					    Extent   = $exp.Extent
