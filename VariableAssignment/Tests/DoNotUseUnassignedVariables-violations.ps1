@@ -14,10 +14,10 @@ function Invoke-Test {
 function Invoke-OtherTest {
     Get-ChildItem $four
     Get-ChildItem $two
-    1..2 | % { $_; get-childitem }
+    1..2 | % { $_ }
     Get-ChildItem $five
     $seven = $true
-    $eight = 'eight'
+    #$eight = $null
 }
 
 #should violate on lines 5, 7, 11, 15, 16, 18

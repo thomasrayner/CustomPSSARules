@@ -40,7 +40,7 @@ function Test-VariableAssignment {
 
 
             foreach ( $exp in $expressions ) {
-                if ( $exp.Name.ToString() -notin ($assigned.Name + $automaticVariables)) {
+                if ( ( $exp.Name.ToString() -notin $assigned.Name ) -and ( $exp.Name.ToString() -notin $automaticVariables ) ) {
                     [PSCustomObject]@{
 					    Message  = "$($exp.Name) is used before it is assigned a value"
 					    Extent   = $exp.Extent
@@ -51,11 +51,11 @@ function Test-VariableAssignment {
                 else {
                     $line = [int]$exp.Line.ToString()
                     $assignsAfter = @($assigned | Where-Object { ( $_.Name -eq $exp.Name.ToString() ) -and ( $_.Line -gt $line ) })
-                    $assignsBefore = @($assigned | Where-Object { ( $_.Name -eq $exp.Name.ToString() ) -and ( $_.Line -le $line ) })
+                    $assignsBefore = @($assigned | Where-Object { ( $_.Name -eq $exp.Name.ToString() ) -and ( $_.Line -lt $line ) })
 
                     if ( ( -not $assignsBefore ) -and ( $assignsAfter ) ) {
                         [PSCustomObject]@{
-					        Message  = "$($exp.Name) is used before it is assigned a value"
+					        Message  = "$($exp.Name) is used before it is assigned a value (assigned on line $($assignsAfter[0].Line))"
 					        Extent   = $exp.Extent
 					        RuleName = 'PSDoNotUseUnassignedVariables'
 					        Severity = 'Warning'
