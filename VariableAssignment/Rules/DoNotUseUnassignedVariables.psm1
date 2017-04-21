@@ -55,7 +55,7 @@ function Test-VariableAssignment {
 
                     if ( ( -not $assignsBefore ) -and ( $assignsAfter ) ) {
                         [PSCustomObject]@{
-					        Message  = "$($exp.Name) is used before it is assigned a value (assigned on line $($assignsAfter[0].Line))"
+					        Message  = "$($exp.Name) is used before it is assigned a value"
 					        Extent   = $exp.Extent
 					        RuleName = 'PSDoNotUseUnassignedVariables'
 					        Severity = 'Warning'
